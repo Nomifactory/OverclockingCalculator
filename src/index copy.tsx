@@ -2,6 +2,8 @@
  * https://github.com/NotMyWing
  */
 
+import './style.scss';
+
 const V = [
 	8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288
 ];
@@ -74,8 +76,8 @@ const createRowData = (row, data) => {
 }
 
 const inputChangeCallback = () => {
-	const EUt = Number(document.querySelector("#EUt").value);
-	const duration = Number(document.querySelector("#duration").value);
+	const EUt = Number((document.querySelector("#EUt") as HTMLInputElement).value);
+	const duration = Number((document.querySelector("#duration") as HTMLInputElement).value);
 
 	if (EUt && duration && (previousEUt !== EUt || previousDuration !== duration)) {
 		previousDuration = EUt;
@@ -162,7 +164,7 @@ const inputChangeCallback = () => {
 	}
 }
 
-const onInputChange = (instant) => {
+const onInputChange = (instant = false) => {
 	if (timeoutHandle) {
 		clearTimeout(timeoutHandle);
 	}
@@ -180,13 +182,13 @@ const onInputChange = (instant) => {
 let darkModes = [
 	() => {
 		document.querySelector("body").className = "white";
-		document.querySelector("#darkmode").value = "Light Mode";
+		(document.querySelector("#darkmode") as HTMLButtonElement).value = "Light Mode";
 	}, () => {
 		document.querySelector("body").className = "dark";
-		document.querySelector("#darkmode").value = "Semi-Dark Mode";
+		(document.querySelector("#darkmode") as HTMLButtonElement).value = "Semi-Dark Mode";
 	}, () => {
 		document.querySelector("body").className = "black";
-		document.querySelector("#darkmode").value = "Dark Mode";
+		(document.querySelector("#darkmode") as HTMLButtonElement).value = "Dark Mode";
 	}
 ];
 
@@ -195,20 +197,20 @@ const switchDarkMode = () => {
 	darkMode = (darkMode + 1) % darkModes.length;
 	darkModes[darkMode]();
 
-	localStorage.setItem("darkMode", darkMode);
+	localStorage.setItem("darkMode", darkMode.toString());
 }
 
 window.onload = () => {
 	console.log("hi");
 
 	["#EUt", "#duration"]
-		.map(id => document.querySelector(id))
+		.map(id => document.querySelector(id) as HTMLInputElement)
 		.forEach(element => {
 			element.oninput  = () => onInputChange();
 			element.onchange = () => onInputChange();
 		});
 
-	document.querySelector("#darkmode").onclick = switchDarkMode;
+	(document.querySelector("#darkmode") as HTMLInputElement).onclick = switchDarkMode;
 	darkModes[darkMode]();
 
 	outputBlock = document.querySelector("#output");
@@ -217,10 +219,10 @@ window.onload = () => {
 
 	window.onhashchange = () => {
 		const params = new URLSearchParams(location.hash.replace(/^#/, ""));
-		document.querySelector("#EUt").value = Number(params.get("eut")) || 0;
-		document.querySelector("#duration").value = Number(params.get("duration")) || 0;
+		(document.querySelector("#EUt") as HTMLInputElement).value =(Number(params.get("eut")) || 0).toString();
+		(document.querySelector("#duration") as HTMLInputElement).value = (Number(params.get("duration")) || 0).toString();
 
 		onInputChange(true);
 	}
-	window.onhashchange();
+	window.onhashchange(null);
 }
