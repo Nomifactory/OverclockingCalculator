@@ -1,7 +1,11 @@
 {
   "name": "gtce-oc-calculator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Calculates stuff",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NotMyWing/OverclockingCalculator.git"
+  },
   "main": "index.js",
   "dependencies": {
     "lodash.isequal": "^4.5.0",
