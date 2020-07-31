@@ -207,7 +207,7 @@ class Calculator extends Component {
 			<div class="block attribution">
 				<a href="https://github.com/NotMyWing/OverclockingCalculator">
 					<span>Omnifactory OC Calculator, by </span>
-					<img src="https://github.com/NotMyWing.png"></img>
+					<img src="https://github.com/NotMyWing.png?size=64"></img>
 				</a>
 			</div>
 		</div>
