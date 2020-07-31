@@ -36,7 +36,7 @@ export const getTierByVoltage = (voltage: number) => {
 
 const getByproductChanceMultiplier = (tier: number, recipe: Recipe) => {
 	const recipeTier = getTierByVoltage(recipe.EUt) + 1;
-	console.log(tier, recipeTier, recipe.EUt);
+
 	if (recipe.isMacerator) {
 		if (tier >= GTTiers.MV) {
 			return 1 << (tier - GTTiers.MV);
@@ -93,13 +93,6 @@ export const calculateOverclock = (recipe: Recipe) => {
 	
 		const result = calculateOverclockInternal(recipe.EUt, voltage, duration);
 		if (voltage / V[tier] == 1 && voltage >= recipe.EUt) {
-			let cap = "";
-			let comment = "";
-			
-			if (waste) {
-				comment = "(wastes&nbsp;energy)"
-			}
-
 			if (result[1] < 1) {
 				result[1] = 1; // ¯\_(ツ)_/¯
 			}
