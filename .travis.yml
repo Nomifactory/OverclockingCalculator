@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 13
+
+script:
+  - export DEVELOPMENT=true
+  - npx webpack
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: false
+  local_dir: dist
+  on:
+    branch: master
