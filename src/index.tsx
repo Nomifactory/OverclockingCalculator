@@ -78,8 +78,13 @@ class Calculator extends Component {
 	}
 
 	private handleWindowHash(recipe: Recipe) {
-		const params = new URLSearchParams(location.hash.replace(/^#/, ""));
-		let hash = `#eut=${recipe.EUt}&duration=${recipe.duration}`;
+		let hash = `#`;
+		if (recipe.EUt !== 0) {
+			hash += `eut=${recipe.EUt}`;
+		}
+		if (recipe.duration !== 0) {
+			hash += `&duration=${recipe.duration}`;
+		}
 		if (recipe.seconds) {
 			hash += `&seconds=${recipe.seconds}`;
 		}
@@ -95,7 +100,13 @@ class Calculator extends Component {
 			*/
 			const callback = window.onhashchange;
 			window.onhashchange = null;
-			window.location.hash = hash;
+
+			if (hash === "#") {
+				history.pushState(null, null, " ");
+			} else {
+				window.location.hash = hash;
+			}
+			
 			setTimeout(() => {
 				window.onhashchange = callback;
 			}, 0);
