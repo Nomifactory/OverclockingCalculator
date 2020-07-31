@@ -2,6 +2,8 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
 	entry: './src/index.tsx',
@@ -13,7 +15,14 @@ module.exports = {
 		new MinifyPlugin({
 			"evaluate": false,
 			"mangle": true
+		}, {
+			"comments": false
 		}),
+		new OptimizeCSSAssetsPlugin({}),
+		new MiniCssExtractPlugin({
+			filename: '[name].css',
+			chunkFilename: '[id].css',
+		  }),
 	],
 	output: {
 		filename: '[name].[contenthash].js',
@@ -26,6 +35,8 @@ module.exports = {
 				use: [
 					// Creates `style` nodes from JS strings
 					'style-loader',
+					// Minifies CSS
+					MiniCssExtractPlugin.loader,
 					// Translates CSS into CommonJS
 					'css-loader',
 					// Compiles Sass to CSS
@@ -37,6 +48,8 @@ module.exports = {
 				use: [
 					// Creates `style` nodes from JS strings
 					'style-loader',
+					// Minifies CSS
+					MiniCssExtractPlugin.loader,
 					// Translates CSS into CommonJS
 					'css-loader',
 				],
