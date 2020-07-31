@@ -3,11 +3,12 @@ import './style.scss';
 
 import { h, render, Component, createRef, RefObject } from "preact";
 import { NumberInputLine } from "./components/NumberInputLine";
-import isEqual from "lodash-es/isequal";
 import { Recipe } from './types/Recipe';
 import { OutputBlock } from "./components/OutputBlock"
 import { CommentBlock } from "./components/CommentBlock"
 import * as util from "./util"
+
+import isEqual = require('lodash.isequal');
 
 class Calculator extends Component {
 	constructor() {
