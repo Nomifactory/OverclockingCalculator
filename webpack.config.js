@@ -5,7 +5,10 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
+const dev = !!process.env.DEVELOPMENT;
+
 module.exports = {
+	mode: dev ? "development" : "production",
 	entry: './src/index.tsx',
 	plugins: [
 		new CleanWebpackPlugin(),
@@ -19,10 +22,7 @@ module.exports = {
 			"comments": false
 		}),
 		new OptimizeCSSAssetsPlugin({}),
-		new MiniCssExtractPlugin({
-			filename: '[name].css',
-			chunkFilename: '[id].css',
-		  }),
+		new MiniCssExtractPlugin({}),
 	],
 	output: {
 		filename: '[name].[contenthash].js',
@@ -74,7 +74,6 @@ module.exports = {
 			"react-dom": "preact-compat"
 		}
 	},
-	watch: true,
-	devtool: 'source-map',
-	mode: "development"
+	watch: dev,
+	devtool: "source-map",
 };
