@@ -31,11 +31,12 @@ export const getTierByVoltage = (voltage: number) => {
 			return Math.max(0, tier - 1);
 		}
 	}
-	return Math.floor(Math.min(V.length -1, tier));
+	return Math.min(V.length -1, tier);
 }
 
 const getByproductChanceMultiplier = (tier: number, recipe: Recipe) => {
-	const recipeTier = getTierByVoltage(recipe.EUt);
+	const recipeTier = getTierByVoltage(recipe.EUt) + 1;
+	console.log(tier, recipeTier, recipe.EUt);
 	if (recipe.isMacerator) {
 		if (tier >= GTTiers.MV) {
 			return 1 << (tier - GTTiers.MV);
