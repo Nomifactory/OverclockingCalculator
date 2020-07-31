@@ -3,7 +3,7 @@ node_js:
   - 13
 
 script:
-  - export DEVELOPMENT=true
+  - export PRODUCTION=true
   - npx webpack
 
 deploy:

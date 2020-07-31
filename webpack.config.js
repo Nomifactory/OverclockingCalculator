@@ -5,10 +5,10 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const dev = !!process.env.DEVELOPMENT;
+const production = !!process.env.PRODUCTION;
 
 module.exports = {
-	mode: dev ? "development" : "production",
+	mode: production ? "production" : "development",
 	entry: './src/index.tsx',
 	plugins: [
 		new CleanWebpackPlugin(),
@@ -74,6 +74,6 @@ module.exports = {
 			"react-dom": "preact/compat"
 		}
 	},
-	watch: dev,
+	watch: !production,
 	devtool: "source-map",
 };
