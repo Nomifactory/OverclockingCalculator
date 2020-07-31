@@ -106,6 +106,7 @@ export const calculateOverclock = (recipe: Recipe) => {
 				duration: result[1],
 				waste: waste,
 				tier: tier,
+				isMacerator: recipe.isMacerator,
 				chance: recipe.chance
 					? Math.min(100, recipe.chance * getByproductChanceMultiplier(tier, recipe))
 					: undefined

@@ -6,7 +6,7 @@ import { NumberInputLine } from "./components/NumberInputLine";
 import isEqual from "lodash-es/isequal";
 import { Recipe } from './types/Recipe';
 import { OutputBlock } from "./components/OutputBlock"
-import { RecipeResult } from "./types/RecipeResult"
+import { CommentBlock } from "./components/CommentBlock"
 import * as util from "./util"
 
 class Calculator extends Component {
@@ -44,6 +44,7 @@ class Calculator extends Component {
 	}
 
 	private outputBlock = createRef<OutputBlock>();
+	private commentBlock = createRef<CommentBlock>();
 	private darkModeButton = createRef<HTMLInputElement>();
 
 	private previousRecipe: Recipe;
@@ -70,11 +71,14 @@ class Calculator extends Component {
 
 		this.handleWindowHash(recipe);
 
-		this.outputBlock.current.setState({
+		const state = {
 			results: util.calculateOverclock(recipe),
 			chance: !!recipe.chance,
 			seconds: recipe.seconds
-		});
+		}
+
+		this.outputBlock.current.setState(state);
+		this.commentBlock.current.setState(state);
 	}
 
 	private handleWindowHash(recipe: Recipe) {
@@ -122,6 +126,10 @@ class Calculator extends Component {
 			chance: Number(this.inputs.Chance.current.input.current.value),
 			isMacerator: Boolean(this.inputs.CheckboxMacerator.current.checked),
 			seconds: Boolean(this.inputs.RadioSeconds.current.checked)
+		}
+
+		if (recipe.EUt === 0) {
+			return;
 		}
 
 		if (isEqual(recipe, this.previousRecipe)) {
@@ -194,7 +202,8 @@ class Calculator extends Component {
 					</div>
 				</div>
 			</div>
-			<OutputBlock ref={this.outputBlock}></OutputBlock>
+			<OutputBlock ref={this.outputBlock}/>
+			<CommentBlock ref={this.commentBlock}/>
 			<div class="block attribution">
 				<a href="https://github.com/NotMyWing/OverclockingCalculator">
 					<span>Omnifactory OC Calculator, by </span>

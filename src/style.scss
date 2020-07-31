@@ -19,6 +19,7 @@ input[type=text], input[type=number], input[type=button] {
 .calculator {
 	width: 40%;
 	padding-top: 25px;
+	padding-bottom: 25px;
 }
 
 hr.solid {
@@ -99,6 +100,18 @@ hr.solid {
 				td:not(:last-child) {
 					margin-right: 20px;
 				}
+			}
+		}
+	}
+
+	&.comment {
+		ul {
+			li:not(:last-child) {
+				padding-bottom: 10px;
+			}
+
+			ul {
+				padding-top: 10px;
 			}
 		}
 	}
