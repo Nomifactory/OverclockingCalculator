@@ -147,58 +147,60 @@ class Calculator extends Component {
 		const callbackInstant = () => { this.changeCallback(true) };
 
 		return <div class="calculator">
-			<div class="block darkmode">
-				<input type="button" value="Dark Mode" ref={this.darkModeButton} onClick={() => { this.handleDarkMode() }}/>
+			<div class="block title">
+				Omnifactory{'\u00A0'}v1.2.2 Overclocking{'\u00A0'}Calculator
 			</div>
-			<div class="block input">
-				<div class="array">
-					<NumberInputLine label="EU/t:" ref={this.inputs.EUt} changeCallback={callback}/>
-					<div>
-						<NumberInputLine label="Duration:" ref={this.inputs.Duration} changeCallback={callback}/>
-						<div class="radio-group">
-							<div class="input-box">
-								<input
-									type="radio"
-									name="tors"
-									id="ticks"
-									ref={this.inputs.RadioTicks}
-									onClick={callbackInstant}
-									onChange={callbackInstant}
-									onInput={callbackInstant}
-								/>
-								<label for="ticks">Ticks</label>
-							</div>
+			<div class="input-container">
+				<div class="block input">
+					<div class="array">
+						<NumberInputLine label="EU/t:" ref={this.inputs.EUt} changeCallback={callback}/>
+						<div>
+							<NumberInputLine label="Duration:" ref={this.inputs.Duration} changeCallback={callback}/>
+							<div class="radio-group">
+								<div class="input-box">
+									<input
+										type="radio"
+										name="tors"
+										id="ticks"
+										ref={this.inputs.RadioTicks}
+										onClick={callbackInstant}
+										onChange={callbackInstant}
+										onInput={callbackInstant}
+									/>
+									<label for="ticks">Ticks</label>
+								</div>
 
-							<div class="input-box">
-								<input
-									type="radio"
-									name="tors"
-									id="seconds"
-									ref={this.inputs.RadioSeconds}
-									onClick={callbackInstant}
-									onChange={callbackInstant}
-									onInput={callbackInstant}
-								/>
-								<label for="seconds">Seconds</label>
+								<div class="input-box">
+									<input
+										type="radio"
+										name="tors"
+										id="seconds"
+										ref={this.inputs.RadioSeconds}
+										onClick={callbackInstant}
+										onChange={callbackInstant}
+										onInput={callbackInstant}
+									/>
+									<label for="seconds">Seconds</label>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="block chance">
-				<div>
-					<NumberInputLine label="Recipe Chance (optional):" ref={this.inputs.Chance} changeCallback={callback}/>
-					<div class="radio-group">
-						<div class="input-box">
-							<input 
-								type="checkbox" 
-								name="macerator"
-								ref={this.inputs.CheckboxMacerator}
-								onClick={callbackInstant}
-								onChange={callbackInstant}
-								id="macerator"
-							/>
-							<label for="macerator">Machine is Macerator</label>
+				<div class="block chance">
+					<div>
+						<NumberInputLine label="Recipe Chance (optional):" ref={this.inputs.Chance} changeCallback={callback}/>
+						<div class="radio-group">
+							<div class="input-box">
+								<input 
+									type="checkbox" 
+									name="macerator"
+									ref={this.inputs.CheckboxMacerator}
+									onClick={callbackInstant}
+									onChange={callbackInstant}
+									id="macerator"
+								/>
+								<label for="macerator">Machine is Macerator</label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -206,8 +208,9 @@ class Calculator extends Component {
 			<OutputBlock ref={this.outputBlock}/>
 			<CommentBlock ref={this.commentBlock}/>
 			<div class="block attribution">
+				<input type="button" value="Dark Mode" ref={this.darkModeButton} onClick={() => { this.handleDarkMode() }}/>
 				<a href="https://github.com/NotMyWing/OverclockingCalculator">
-					<span>Omnifactory OC Calculator, by </span>
+					<span>NMW </span>
 					<img src="https://github.com/NotMyWing.png?size=64"></img>
 				</a>
 			</div>
@@ -236,5 +239,3 @@ class Calculator extends Component {
 }
 
 render(<Calculator/>, document.body);
-
-document.body.classList.add("white");

@@ -11,7 +11,7 @@ export type OutputBlockState = {
 export class OutputBlock extends Component<{}, OutputBlockState> {
 	render() {
 		return <div class="block output">
-			<table>
+			{this.state.results && <table>
 				<tr>
 					<td class="tier">
 						Tier
@@ -26,7 +26,8 @@ export class OutputBlock extends Component<{}, OutputBlockState> {
 						EU/t
 					</td>
 				</tr>
-				{this.state.results && this.state.results.map(recipeResult => {
+				{this.state.results.map(recipeResult => 
+					{
 						return <tr>
 							<td class="tier">
 								{VNames[recipeResult.tier]}
@@ -47,7 +48,7 @@ export class OutputBlock extends Component<{}, OutputBlockState> {
 						</tr>
 					})
 				}
-			</table>
+			</table>}
 		</div>
 	}
 }
