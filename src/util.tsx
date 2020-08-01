@@ -2,11 +2,11 @@ import { RecipeResult } from "./types/RecipeResult";
 import { Recipe } from "./types/Recipe";
 
 export const V = [
-	8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288
+	8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, 2147483647
 ];
 
 export const VNames = [
-	"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV"
+	"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "MAX"
 ];
 
 export enum GTTiers {
@@ -31,12 +31,11 @@ export const getTierByVoltage = (voltage: number) => {
 			return Math.max(0, tier - 1);
 		}
 	}
-	return Math.min(V.length -1, tier);
+	return Math.min(V.length - 1, tier);
 }
 
 const getByproductChanceMultiplier = (tier: number, recipe: Recipe) => {
-	const recipeTier = getTierByVoltage(recipe.EUt) + 1;
-
+	const recipeTier = getTierByVoltage(recipe.EUt);
 	if (recipe.isMacerator) {
 		if (tier >= GTTiers.MV) {
 			return 1 << (tier - GTTiers.MV);
