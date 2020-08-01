@@ -83,6 +83,12 @@
 			}
 		}
 
+		&.chance {
+			.hint {
+				margin-top: 1em;
+			}
+		}
+
 		&.title {
 			font-size: 125%;
 			text-align: center;

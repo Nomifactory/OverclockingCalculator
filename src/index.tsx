@@ -189,7 +189,7 @@ class Calculator extends Component {
 				</div>
 				<div class="block chance">
 					<div>
-						<NumberInputLine label="Recipe Chance (optional):" ref={this.inputs.Chance} changeCallback={callback}/>
+						<NumberInputLine label="Base Product Chance (optional):" ref={this.inputs.Chance} changeCallback={callback}/>
 						<div class="radio-group">
 							<div class="input-box">
 								<input 
@@ -202,6 +202,9 @@ class Calculator extends Component {
 								/>
 								<label for="macerator">Machine is Macerator</label>
 							</div>
+						</div>
+						<div class="hint">
+							Hover over a product in JEI. If it has a chance associated with it, type it here.
 						</div>
 					</div>
 				</div>
