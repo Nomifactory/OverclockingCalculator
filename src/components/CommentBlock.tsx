@@ -9,11 +9,13 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 			const comments: preact.JSX.Element[] = [];
 			if (this.state.results.length > 0) {
 				/*
-				 * Find Cap
+				 * Find Various Stuff
 				 */
+				const last = this.state.results[this.state.results.length - 1];
 				let cap: RecipeResult;
 				let continuousCap: RecipeResult;
 				let maxChance: RecipeResult;
+				let maxSpeed: RecipeResult;
 
 				this.state.results.forEach((recipe, index) => {
 					if (!continuousCap && recipe.duration === 2) {
@@ -27,10 +29,11 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 					if (!cap && recipe.duration === 1) {
 						cap = recipe;
 					}
-				});
 
-				const last =  this.state.results[this.state.results.length - 1];
-				const maxSpeed = cap || continuousCap || last;
+					if (!maxSpeed || maxSpeed.duration > recipe.duration) {
+						maxSpeed = recipe;
+					}
+				});
 
 				if (this.state.results[0].EUt <= 16) {
 					comments.push(<li>
