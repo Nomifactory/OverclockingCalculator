@@ -8,6 +8,11 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const production = !!process.env.PRODUCTION;
 
 module.exports = {
+	devServer: !production && {
+		contentBase: path.join(__dirname, 'dist'),
+		compress: true,
+		port: 8080
+	},
 	mode: production ? "production" : "development",
 	entry: './src/index.tsx',
 	plugins: [
