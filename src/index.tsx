@@ -17,9 +17,21 @@ class Calculator extends Component {
 		window.onhashchange = () => {
 			const params = new URLSearchParams(location.hash.replace(/^#/, ""));
 
-			this.inputs.EUt.current.input.current.value      = (Number(params.get("eut")) || 0).toString();
-			this.inputs.Duration.current.input.current.value = (Number(params.get("duration")) || 0).toString();
-			this.inputs.Chance.current.input.current.value   = (Number(params.get("chance")) || 0).toString();
+			const eut = Number(params.get("eut"));
+			if (eut !== 0) {
+				this.inputs.EUt.current.input.current.value = eut.toString();
+			}
+
+			const duration = Number(params.get("duration"));
+			if (duration !== 0) {
+				this.inputs.Duration.current.input.current.value = duration.toString();
+			}
+
+			const chance = Number(params.get("chance"));
+			if (chance) {
+				this.inputs.Chance.current.input.current.value = chance.toString();
+			}
+
 			this.inputs.CheckboxMacerator.current.checked    = Boolean(params.get("mace"));
 			this.inputs.RadioSeconds.current.checked         = Boolean(params.get("seconds"));
 			this.inputs.RadioTicks.current.checked           = !Boolean(params.get("seconds"));
