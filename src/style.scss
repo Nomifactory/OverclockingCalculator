@@ -56,6 +56,14 @@
 
 			&.output {
 				padding: 0px;
+
+				.bunbun {
+					background-image: url("assets/bunbun.png");
+					padding-top: 100%;
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				}
 			}
 		}
 

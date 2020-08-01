@@ -75,7 +75,8 @@ class Calculator extends Component {
 		const state = {
 			results: util.calculateOverclock(recipe),
 			chance: !!recipe.chance,
-			seconds: recipe.seconds
+			seconds: recipe.seconds,
+			bunned: false,
 		}
 
 		this.outputBlock.current.setState(state);
@@ -229,12 +230,28 @@ class Calculator extends Component {
 			this.darkModeButton.current.value = "Dark Mode";
 		}
 	];
+
 	private darkMode = Number(localStorage.getItem("darkMode")) || 0;
+	private darkModeClicks = 0;
+
 	handleDarkMode() {
 		this.darkMode = (this.darkMode + 1) % this.darkModes.length;
 		this.darkModes[this.darkMode]();
 	
 		localStorage.setItem("darkMode", this.darkMode.toString());
+
+		this.darkModeClicks++;
+		if (this.darkModeClicks > 10) {
+			const state = {
+				...this.outputBlock.current.state,
+				bunned: true
+			}
+
+			this.outputBlock.current.setState(state);
+			this.commentBlock.current.setState(state);
+		
+			this.darkModeClicks = 0;
+		}
 	}
 }
 

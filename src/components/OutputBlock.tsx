@@ -6,10 +6,17 @@ export type OutputBlockState = {
 	results?: RecipeResult[];
 	seconds?: boolean;
 	chance?: boolean;
+	bunned?: boolean;
 }
 
 export class OutputBlock extends Component<{}, OutputBlockState> {
 	render() {
+		if (this.state.bunned) {
+			return <div class="block output">
+				<div class="bunbun"></div>
+			</div>
+		}
+
 		return <div class="block output">
 			{this.state.results && <table>
 				<tr>
