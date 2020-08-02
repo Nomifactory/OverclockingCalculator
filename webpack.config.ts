@@ -11,14 +11,17 @@ const cfg = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			template: "./src/index.html"
+			template: "./src/index.html",
 		}),
-		new MinifyPlugin({
-			evaluate: false,
-			mangle: true
-		}, {
-			comments: false
-		}),
+		new MinifyPlugin(
+			{
+				evaluate: false,
+				mangle: true,
+			},
+			{
+				comments: false,
+			},
+		),
 		new OptimizeCSSAssetsPlugin({}),
 		new MiniCssExtractPlugin({}),
 	],
@@ -66,13 +69,13 @@ const cfg = {
 				test: /\.tsx?$/,
 				loader: "eslint-loader",
 				options: {
-					emitError: true
-				}
+					emitError: true,
+				},
 			},
 			{
 				test: /\.tsx?$/,
-				loader: "ts-loader"
-			}
+				loader: "ts-loader",
+			},
 		],
 	},
 	resolve: {
@@ -80,15 +83,15 @@ const cfg = {
 		extensions: [".ts", ".tsx", ".js"],
 		alias: {
 			react: "preact/compat",
-			"react-dom": "preact/compat"
-		}
+			"react-dom": "preact/compat",
+		},
 	},
 	devtool: "source-map",
 	devServer: {
 		contentBase: path.join(__dirname, "dist"),
 		compress: true,
-		port: 8080
-	}
+		port: 8080,
+	},
 };
 
 module.exports = cfg;

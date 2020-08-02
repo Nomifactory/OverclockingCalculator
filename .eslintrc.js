@@ -4,16 +4,12 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: "module",
 		ecmaFeatures: {
-			jsx: true
-		}
+			jsx: true,
+		},
 	},
-	extends: [
-		"plugin:@typescript-eslint/recommended",
-		"preact",
-		"plugin:prettier/recommended"
-	],
+	extends: ["plugin:@typescript-eslint/recommended", "preact", "plugin:prettier/recommended"],
 	rules: {
-		quotes: [ 2, "double", { avoidEscape: true } ],
-		semi: [ 2, "always" ]
-	}
+		quotes: [2, "double", { avoidEscape: true }],
+		semi: [2, "always"],
+	},
 };
