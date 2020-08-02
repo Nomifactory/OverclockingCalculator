@@ -32,7 +32,7 @@ export class NumberInputLine extends Component<NumberInputLineProps, NumberInput
 		return (
 			<div class="input-line">
 				<span>{this.state.label || this.props.label}</span>
-				<input type="number" placeholder="0" ref={this.input} onChange={callback} onInput={callback} />
+				<input type="number" placeholder="0" ref={this.input} onChange={callback} onInput={callback} step="any" />
 			</div>
 		);
 	}
