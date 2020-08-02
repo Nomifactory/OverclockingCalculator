@@ -1,11 +1,11 @@
-const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+import * as path from "path";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MinifyPlugin from "babel-minify-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
 
-const production = !!process.env.PRODUCTION;
+const production = process.env.NODE_ENV;
 
 const cfg = {
 	mode: production ? "production" : "development",
@@ -16,10 +16,10 @@ const cfg = {
 			template: './src/index.html'
 		}),
 		new MinifyPlugin({
-			"evaluate": false,
-			"mangle": true
+			evaluate: false,
+			mangle: true
 		}, {
-			"comments": false
+			comments: false
 		}),
 		new OptimizeCSSAssetsPlugin({}),
 		new MiniCssExtractPlugin({}),
@@ -63,27 +63,34 @@ const cfg = {
 				],
 			},
 			// all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-			{ test: /\.tsx?$/, loader: "ts-loader" }
+			{
+				enforce: "pre",
+				test: /\.tsx?$/,
+				loader: "eslint-loader",
+				options: {
+					emitError: true
+				}
+			},
+			{
+				test: /\.tsx?$/,
+				loader: "ts-loader"
+			}
 		],
 	},
 	resolve: {
 		// Add `.ts` and `.tsx` as a resolvable extension.
 		extensions: [".ts", ".tsx", ".js"],
-		"alias": {
-			"react": "preact/compat",
+		alias: {
+			react: "preact/compat",
 			"react-dom": "preact/compat"
 		}
 	},
-	watch: !production,
 	devtool: "source-map",
-};
-
-if (!production) {
-	cfg.devServer = {
+	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
 		compress: true,
 		port: 8080
 	}
-}
+};
 
 module.exports = cfg;
