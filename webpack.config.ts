@@ -5,15 +5,13 @@ import MinifyPlugin from "babel-minify-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
 
-const production = process.env.NODE_ENV;
-
 const cfg = {
-	mode: production ? "production" : "development",
-	entry: './src/index.tsx',
+	mode: process.env.NODE_ENV || "development",
+	entry: "./src/index.tsx",
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			template: './src/index.html'
+			template: "./src/index.html"
 		}),
 		new MinifyPlugin({
 			evaluate: false,
@@ -25,8 +23,8 @@ const cfg = {
 		new MiniCssExtractPlugin({}),
 	],
 	output: {
-		filename: '[name].[contenthash].js',
-		path: path.resolve(__dirname, 'dist'),
+		filename: "[name].[contenthash].js",
+		path: path.resolve(__dirname, "dist"),
 	},
 	module: {
 		rules: [
@@ -34,31 +32,31 @@ const cfg = {
 				test: /\.s[ac]ss$/i,
 				use: [
 					// Creates `style` nodes from JS strings
-					'style-loader',
+					"style-loader",
 					// Minifies CSS
 					MiniCssExtractPlugin.loader,
 					// Translates CSS into CommonJS
-					'css-loader',
+					"css-loader",
 					// Compiles Sass to CSS
-					'sass-loader',
+					"sass-loader",
 				],
 			},
 			{
 				test: /\.css$/i,
 				use: [
 					// Creates `style` nodes from JS strings
-					'style-loader',
+					"style-loader",
 					// Minifies CSS
 					MiniCssExtractPlugin.loader,
 					// Translates CSS into CommonJS
-					'css-loader',
+					"css-loader",
 				],
 			},
 			{
 				test: /\.(png|jpe?g|gif)$/i,
 				use: [
 					{
-						loader: 'file-loader',
+						loader: "file-loader",
 					},
 				],
 			},
@@ -87,7 +85,7 @@ const cfg = {
 	},
 	devtool: "source-map",
 	devServer: {
-		contentBase: path.join(__dirname, 'dist'),
+		contentBase: path.join(__dirname, "dist"),
 		compress: true,
 		port: 8080
 	}

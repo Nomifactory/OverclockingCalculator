@@ -1,14 +1,14 @@
-import 'normalize.css';
-import './style.scss';
+import "normalize.css";
+import "./style.scss";
 
-import { h, render, Component, createRef, RefObject } from "preact";
+import { h, render, Component, createRef } from "preact";
 import { NumberInputLine } from "./components/NumberInputLine";
-import { Recipe } from './types/Recipe';
-import { OutputBlock } from "./components/OutputBlock"
-import { CommentBlock } from "./components/CommentBlock"
-import * as util from "./util"
+import { Recipe } from "./types/Recipe";
+import { OutputBlock } from "./components/OutputBlock";
+import { CommentBlock } from "./components/CommentBlock";
+import * as util from "./util";
 
-import isEqual = require('lodash.isequal');
+import isEqual = require("lodash.isequal");
 
 class Calculator extends Component {
 	constructor() {
@@ -34,10 +34,10 @@ class Calculator extends Component {
 
 			this.inputs.CheckboxMacerator.current.checked    = Boolean(params.get("mace"));
 			this.inputs.RadioSeconds.current.checked         = Boolean(params.get("seconds"));
-			this.inputs.RadioTicks.current.checked           = !Boolean(params.get("seconds"));
+			this.inputs.RadioTicks.current.checked           = !params.get("seconds");
 	
 			this.changeCallback(true);
-		}
+		};
 	}
 	componentDidMount() {
 		window.onhashchange(null);
@@ -48,12 +48,12 @@ class Calculator extends Component {
 	private timerHandle: NodeJS.Timeout;
 
 	private inputs = {
-		"EUt": createRef<NumberInputLine>(),
-		"Duration": createRef<NumberInputLine>(),
-		"Chance": createRef<NumberInputLine>(),
-		"RadioSeconds": createRef<HTMLInputElement>(),
-		"RadioTicks": createRef<HTMLInputElement>(),
-		"CheckboxMacerator": createRef<HTMLInputElement>(),
+		EUt: createRef<NumberInputLine>(),
+		Duration: createRef<NumberInputLine>(),
+		Chance: createRef<NumberInputLine>(),
+		RadioSeconds: createRef<HTMLInputElement>(),
+		RadioTicks: createRef<HTMLInputElement>(),
+		CheckboxMacerator: createRef<HTMLInputElement>(),
 	}
 
 	private outputBlock = createRef<OutputBlock>();
@@ -74,9 +74,9 @@ class Calculator extends Component {
 
 		if (isEqual(recipe, this.previousRecipe)) {
 			return;
-		} else {
-			this.previousRecipe = recipe;
 		}
+		
+		this.previousRecipe = recipe;
 
 		if (recipe.chance === 0) {
 			recipe.chance = 0;
@@ -89,14 +89,14 @@ class Calculator extends Component {
 			chance: !!recipe.chance,
 			seconds: recipe.seconds,
 			bunned: false,
-		}
+		};
 
 		this.outputBlock.current.setState(state);
 		this.commentBlock.current.setState(state);
 	}
 
 	private handleWindowHash(recipe: Recipe) {
-		let hash = `#`;
+		let hash = "#";
 		if (recipe.EUt !== 0) {
 			hash += `eut=${recipe.EUt}`;
 		}
@@ -131,7 +131,7 @@ class Calculator extends Component {
 		}
 	}
 
-	private changeCallback(instant: boolean = false) {
+	private changeCallback(instant = false) {
 		this.destroyTimer();
 
 		const recipe: Recipe = {
@@ -140,7 +140,7 @@ class Calculator extends Component {
 			chance: Number(this.inputs.Chance.current.input.current.value),
 			isMacerator: Boolean(this.inputs.CheckboxMacerator.current.checked),
 			seconds: Boolean(this.inputs.RadioSeconds.current.checked)
-		}
+		};
 
 		if (recipe.EUt === 0) {
 			return;
@@ -156,19 +156,19 @@ class Calculator extends Component {
 	}
 
 	render() {
-		const callback = () => { this.changeCallback() };
-		const callbackInstant = () => { this.changeCallback(true) };
+		const callback = () => { this.changeCallback(); };
+		const callbackInstant = () => { this.changeCallback(true); };
 
 		return <div class="calculator">
 			<div class="block title">
-				Omnifactory{'\u00A0'}v1.2.2 Overclocking{'\u00A0'}Calculator
+				Omnifactory{"\u00A0"}v1.2.2 Overclocking{"\u00A0"}Calculator
 			</div>
 			<div class="input-container">
 				<div class="block input">
 					<div class="array">
-						<NumberInputLine label="EU/t:" ref={this.inputs.EUt} changeCallback={callback}/>
+						<NumberInputLine label="EU/t:" ref={this.inputs.EUt} changeCallback={callback} />
 						<div>
-							<NumberInputLine label="Duration:" ref={this.inputs.Duration} changeCallback={callback}/>
+							<NumberInputLine label="Duration:" ref={this.inputs.Duration} changeCallback={callback} />
 							<div class="radio-group">
 								<div class="input-box">
 									<input
@@ -201,7 +201,7 @@ class Calculator extends Component {
 				</div>
 				<div class="block chance">
 					<div>
-						<NumberInputLine label="Base Product Chance (optional):" ref={this.inputs.Chance} changeCallback={callback}/>
+						<NumberInputLine label="Base Product Chance (optional):" ref={this.inputs.Chance} changeCallback={callback} />
 						<div class="radio-group">
 							<div class="input-box">
 								<input 
@@ -221,16 +221,16 @@ class Calculator extends Component {
 					</div>
 				</div>
 			</div>
-			<OutputBlock ref={this.outputBlock}/>
-			<CommentBlock ref={this.commentBlock}/>
+			<OutputBlock ref={this.outputBlock} />
+			<CommentBlock ref={this.commentBlock} />
 			<div class="block attribution">
-				<input type="button" value="Dark Mode" ref={this.darkModeButton} onClick={() => { this.handleDarkMode() }}/>
+				<input type="button" value="Dark Mode" ref={this.darkModeButton} onClick={() => { this.handleDarkMode(); }} />
 				<a href="https://github.com/NotMyWing/OverclockingCalculator">
 					<span>OmnifactoryDevs </span>
-					<img src="https://github.com/OmnifactoryDevs.png?size=64"></img>
+					<img src="https://github.com/OmnifactoryDevs.png?size=64" />
 				</a>
 			</div>
-		</div>
+		</div>;
 	}
 
 	private darkModes = [
@@ -260,7 +260,7 @@ class Calculator extends Component {
 			const state = {
 				...this.outputBlock.current.state,
 				bunned: true
-			}
+			};
 
 			this.outputBlock.current.setState(state);
 			this.commentBlock.current.setState(state);
@@ -270,4 +270,4 @@ class Calculator extends Component {
 	}
 }
 
-render(<Calculator/>, document.body);
+render(<Calculator />, document.body);

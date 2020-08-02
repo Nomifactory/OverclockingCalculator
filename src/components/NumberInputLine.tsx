@@ -1,4 +1,4 @@
-import { h, Component, createRef, RefObject} from 'preact';
+import { h, Component, createRef, RefObject} from "preact";
 
 type NumberInputLineProps = {
 	label: string;
@@ -24,8 +24,8 @@ export class NumberInputLine extends Component<NumberInputLineProps, NumberInput
 		this.input = createRef<HTMLInputElement>();
 	}
 
-	render() {
-		const callback = (e) => { this.onChange(e) };
+	render(): h.JSX.Element {
+		const callback = (e) => { this.onChange(e); };
 
 		return <div class="input-line">
 			<span>{this.state.label || this.props.label}</span>

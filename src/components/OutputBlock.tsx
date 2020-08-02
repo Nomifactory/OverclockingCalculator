@@ -1,6 +1,6 @@
-import { h, Component, createRef, RefObject} from 'preact';
-import { RecipeResult } from '../types/RecipeResult';
-import { getTierByVoltage, VNames } from '../util';
+import { h, Component } from "preact";
+import { RecipeResult } from "../types/RecipeResult";
+import { VNames } from "../util";
 
 export type OutputBlockState = {
 	results?: RecipeResult[];
@@ -9,12 +9,12 @@ export type OutputBlockState = {
 	bunned?: boolean;
 }
 
-export class OutputBlock extends Component<{}, OutputBlockState> {
-	render() {
+export class OutputBlock extends Component<unknown, OutputBlockState> {
+	render(): h.JSX.Element {
 		if (this.state.bunned) {
 			return <div class="block output">
-				<div class="bunbun"></div>
-			</div>
+				<div class="bunbun" />
+			</div>;
 		}
 
 		return <div class="block output">
@@ -33,29 +33,27 @@ export class OutputBlock extends Component<{}, OutputBlockState> {
 						EU/t
 					</td>
 				</tr>
-				{this.state.results.map(recipeResult => 
-					{
-						return <tr>
-							<td class="tier">
-								{VNames[recipeResult.tier]}
+				{this.state.results.map(recipeResult => {
+					return <tr>
+						<td class="tier">
+							{VNames[recipeResult.tier]}
+						</td>
+						<td>{
+							this.state.seconds 
+							? `${recipeResult.duration / 20} s.` 
+							: `${recipeResult.duration} t.`
+						}</td>
+						{
+							this.state.chance && <td>
+								{recipeResult.chance || 0}%
 							</td>
-							<td>{
-								this.state.seconds 
-								? `${recipeResult.duration / 20} s.` 
-								: `${recipeResult.duration} t.`
-							}</td>
-							{
-								this.state.chance && <td>
-									{recipeResult.chance || 0}%
-								</td>
-							}
-							<td>
-								{recipeResult.EUt.toLocaleString("en-US")}
-							</td>
-						</tr>
-					})
-				}
+						}
+						<td>
+							{recipeResult.EUt.toLocaleString("en-US")}
+						</td>
+					</tr>;
+				})}
 			</table>}
-		</div>
+		</div>;
 	}
 }

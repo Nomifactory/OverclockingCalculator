@@ -1,10 +1,10 @@
-import { h, Component, createRef, RefObject} from 'preact';
+import { h, Component } from "preact";
 import { OutputBlockState } from "./OutputBlock";
-import { VNames } from '../util';
-import { RecipeResult } from '../types/RecipeResult';
+import { VNames } from "../util";
+import { RecipeResult } from "../types/RecipeResult";
 
-export class CommentBlock extends Component<{}, OutputBlockState> {
-	render() {
+export class CommentBlock extends Component<unknown, OutputBlockState> {
+	render(): h.JSX.Element {
 		if (this.state.results) {
 			const comments: preact.JSX.Element[] = [];
 			if (this.state.results.length > 0) {
@@ -17,7 +17,7 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 				let maxChance: RecipeResult;
 				let maxSpeed: RecipeResult;
 
-				this.state.results.forEach((recipe, index) => {
+				this.state.results.forEach((recipe) => {
 					if (!continuousCap && recipe.duration === 2) {
 						continuousCap = recipe;
 					}
@@ -43,12 +43,12 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 							Because GTCE has a flaw in the logic, the recipe starts wasting power
 							after <b>{VNames[(continuousCap || cap).tier]}</b>.
 						</li></ul>}
-					</li>)
+					</li>);
 				} else {
 					comments.push(<li>
 						Since the recipe has the base EU/t higher than <b>16</b>,
 						the duration is divided by <b>2.8</b> per overclock.
-					</li>)
+					</li>);
 				}
 
 				if (continuousCap && cap) {
@@ -56,7 +56,7 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 						While the recipe technically caps out at <b>{VNames[cap.tier]}</b>,
 						the recipe will be processed at the same speed 
 						in <b>{VNames[continuousCap.tier]} machine</b> for less power when running continuously.
-					</li>)
+					</li>);
 				} else {
 					comments.push(<li>
 						The recipe reaches the maximum speed at <b>{VNames[maxSpeed.tier]}</b>.
@@ -64,7 +64,7 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 							While the recipe caps out at 2 ticks, it will actually be
 							processed faster (at 1 tick) when running continuously.
 						</li></ul>}
-					</li>)
+					</li>);
 				}
 				
 				if (this.state.chance) {
@@ -72,7 +72,7 @@ export class CommentBlock extends Component<{}, OutputBlockState> {
 						comments.push(<li>
 							Because the machine is macerator, the product chance
 							starts scaling after <b>MV</b>.
-						</li>)
+						</li>);
 					}
 				}
 			}

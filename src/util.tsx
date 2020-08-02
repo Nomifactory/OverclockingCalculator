@@ -22,7 +22,7 @@ export enum GTTiers {
     MAX,
 }
 
-export const getTierByVoltage = (voltage: number) => {
+export const getTierByVoltage = (voltage: number): number => {
 	let tier = 0;
 	while (++tier < V.length) {
 		if (voltage == V[tier]) {
@@ -32,22 +32,22 @@ export const getTierByVoltage = (voltage: number) => {
 		}
 	}
 	return Math.min(V.length - 1, tier);
-}
+};
 
 const getByproductChanceMultiplier = (tier: number, recipe: Recipe) => {
 	const recipeTier = getTierByVoltage(recipe.EUt);
 	if (recipe.isMacerator) {
 		if (tier >= GTTiers.MV) {
 			return 1 << (tier - GTTiers.MV);
-		} else {
-			return 1
 		}
+
+		return 1;
 	} else if (!recipe.isMacerator && tier > GTTiers.LV && tier > recipeTier) {
 		return 1 << (tier - recipeTier);
-	} else {
-		return 1
-	}
-}
+	} 
+		return 1;
+	
+};
 
 /*
 https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java#L239
@@ -64,19 +64,19 @@ const calculateOverclockInternal = (EUt: number, voltage: number, duration: numb
 		const resultEUt = EUt * (1 << multiplier) * (1 << multiplier);
 		const resultDuration = duration / (1 << multiplier);
 		return [ negativeEU ? -resultEUt : resultEUt, Math.floor(resultDuration) ];
-	} else {
-		let resultEUt = EUt;
-		let resultDuration = duration;
-		//do not overclock further if duration is already too small
-		while (resultDuration >= 3 && resultEUt <= V[tier - 1]) {
-			resultEUt *= 4;
-			resultDuration /= 2.8;
-		}
-		return [ negativeEU ? -resultEUt : resultEUt, Math.ceil(resultDuration) ];
 	}
-}
 
-export const calculateOverclock = (recipe: Recipe) => {
+	let resultEUt = EUt;
+	let resultDuration = duration;
+	//do not overclock further if duration is already too small
+	while (resultDuration >= 3 && resultEUt <= V[tier - 1]) {
+		resultEUt *= 4;
+		resultDuration /= 2.8;
+	}
+	return [ negativeEU ? -resultEUt : resultEUt, Math.ceil(resultDuration) ];
+};
+
+export const calculateOverclock = (recipe: Recipe): RecipeResult[] => {
 	let tier = 0;
 	let voltage = 0;
 	let waste = false;
@@ -103,15 +103,15 @@ export const calculateOverclock = (recipe: Recipe) => {
 			output.push({
 				EUt: result[0],
 				duration: result[1],
-				waste: waste,
-				tier: tier,
+				waste,
+				tier,
 				isMacerator: recipe.isMacerator,
 				chance: recipe.chance
 					? Math.min(100, recipe.chance * getByproductChanceMultiplier(tier, recipe))
 					: undefined
-			})
+			});
 		}
 	}
 
 	return output;
-}
+};
