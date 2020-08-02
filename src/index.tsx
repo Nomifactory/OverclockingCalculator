@@ -297,12 +297,16 @@ class Calculator extends Component {
 		 * 🐰
 		 */
 		this.darkModeClicks++;
+
+		if (this.darkModeClicks > 10 || this.outputBlock.current.state.bunned) {
+			this.darkModeButton.current.value = "Rabbit Mode";
+		}
+
 		if (this.darkModeClicks > 10) {
 			const state = {
 				bunned: true,
 			};
 
-			this.darkModeButton.current.value = "Rabbit Mode";
 			this.outputBlock.current.setState(state);
 			this.commentBlock.current.setState(state);
 
