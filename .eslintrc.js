@@ -4,11 +4,15 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: "module",
 		ecmaFeatures: {
-			jsx: true // Allows for the parsing of JSX
+			jsx: true
 		}
 	},
 	extends: [
 		"plugin:@typescript-eslint/recommended",
 		"preact"
 	],
-}
+	rules: {
+		quotes: [ 2, "double", { avoidEscape: true } ],
+		semi: [ 2, "always" ]
+	}
+};
