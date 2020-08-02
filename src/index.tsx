@@ -302,6 +302,7 @@ class Calculator extends Component {
 				bunned: true,
 			};
 
+			this.darkModeButton.current.value = "Rabbit Mode";
 			this.outputBlock.current.setState(state);
 			this.commentBlock.current.setState(state);
 
