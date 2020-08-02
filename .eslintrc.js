@@ -9,7 +9,8 @@ module.exports = {
 	},
 	extends: [
 		"plugin:@typescript-eslint/recommended",
-		"preact"
+		"preact",
+		"plugin:prettier/recommended"
 	],
 	rules: {
 		quotes: [ 2, "double", { avoidEscape: true } ],
