@@ -3,8 +3,7 @@ node_js:
   - 13
 
 script:
-  - export PRODUCTION=true
-  - npx webpack
+  - npm run build:prod
 
 deploy:
   provider: pages
