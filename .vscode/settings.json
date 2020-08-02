@@ -4,4 +4,7 @@
 	"eslint.workingDirectories": [
 		"./", 
 	],
+	"editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }
