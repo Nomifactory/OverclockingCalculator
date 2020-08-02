@@ -92,6 +92,7 @@
 		&.title {
 			font-size: 125%;
 			text-align: center;
+			font-weight: 500;
 		}
 
 		&.output {
@@ -243,20 +244,20 @@ body {
 		}
 
 		.block {
-			background-color: #888;
+			background-color: #919191;
 
 			&:not(:empty) {
-				border: 1px solid #111;
+				border: 1px solid rgba(16, 16, 16, 0.25);
 			}
 
 			&.output {
 				table {
 					tr:first-child {
-						border-bottom: 1px solid #111;
+						border-bottom: 1px solid rgba(16, 16, 16, 0.25);
 					}
 
 					tr:nth-child(even) {
-						background-color: #959595;
+						background-color: #989898;
 					}
 				}
 			}
@@ -374,5 +375,16 @@ body {
 				}
 			}
 		}
+	}
+}
+
+/*
+	Animations
+*/
+.calculator.animated {
+	&, .block, input, tr, td {
+		transition-property: color, background-color, border;
+		transition-duration: .2s;
+		transition-timing-function: ease-in-out;
 	}
 }

@@ -5,7 +5,7 @@ import { VNames } from "../util";
 export type OutputBlockState = {
 	results?: RecipeResult[];
 	seconds?: boolean;
-	chance?: boolean;
+	chanced?: boolean;
 	bunned?: boolean;
 };
 
@@ -26,7 +26,7 @@ export class OutputBlock extends Component<unknown, OutputBlockState> {
 						<tr>
 							<td class="tier">Tier</td>
 							<td>Duration</td>
-							{this.state.chance && <td>Chance</td>}
+							{this.state.chanced && <td>Chance</td>}
 							<td>EU/t</td>
 						</tr>
 						{this.state.results.map((recipeResult) => {
@@ -34,7 +34,7 @@ export class OutputBlock extends Component<unknown, OutputBlockState> {
 								<tr>
 									<td class="tier">{VNames[recipeResult.tier]}</td>
 									<td>{this.state.seconds ? `${recipeResult.duration / 20} s.` : `${recipeResult.duration} t.`}</td>
-									{this.state.chance && <td>{recipeResult.chance || 0}%</td>}
+									{this.state.chanced && <td>{recipeResult.chance || 0}%</td>}
 									<td>{recipeResult.EUt.toLocaleString("en-US")}</td>
 								</tr>
 							);

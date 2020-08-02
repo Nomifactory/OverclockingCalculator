@@ -22,7 +22,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 						continuousCap = recipe;
 					}
 
-					if (this.state.chance && (!maxChance || maxChance.chance < recipe.chance)) {
+					if (this.state.chanced && (!maxChance || maxChance.chance < recipe.chance)) {
 						maxChance = recipe;
 					}
 
@@ -35,7 +35,13 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 					}
 				});
 
+				/**
+				 * Push a comment about how the overclocking was calculated.
+				 */
 				if (this.state.results[0].EUt <= 16) {
+					/**
+					 * <= EU/t
+					 */
 					comments.push(
 						<li>
 							Since the recipe has the base EU/t of <b>16</b> or less, the duration is divided by <b>2</b> per
@@ -51,6 +57,9 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 						</li>,
 					);
 				} else {
+					/**
+					 * > 16 EU/t
+					 */
 					comments.push(
 						<li>
 							Since the recipe has the base EU/t higher than <b>16</b>, the duration is divided by <b>2.8</b> per
@@ -59,7 +68,13 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 					);
 				}
 
+				/**
+				 * Push a comment about the speed cap.
+				 */
 				if (continuousCap && cap) {
+					/**
+					 * Continuous vs real cap.
+					 */
 					comments.push(
 						<li>
 							While the recipe technically caps out at <b>{VNames[cap.tier]}</b>, the recipe will be processed at the
@@ -67,6 +82,9 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 						</li>,
 					);
 				} else {
+					/**
+					 * Real cap.
+					 */
 					comments.push(
 						<li>
 							The recipe reaches the maximum speed at <b>{VNames[maxSpeed.tier]}</b>.
@@ -82,7 +100,15 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 					);
 				}
 
-				if (this.state.chance) {
+				/**
+				 * Push comments regarding chances.
+				 */
+				if (this.state.chanced) {
+					comments.push(
+						<li>
+							The product chance maxes out at <b>{VNames[maxChance.tier]}</b>.
+						</li>,
+					);
 					if (this.state.results[0].isMacerator) {
 						comments.push(
 							<li>
@@ -93,6 +119,9 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				}
 			}
 
+			/**
+			 * Render comments.
+			 */
 			return (
 				<div class="block comment">
 					{comments.length > 0 && (

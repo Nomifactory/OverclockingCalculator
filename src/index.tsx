@@ -4,13 +4,48 @@ import "./style.scss";
 import { h, render, Component, createRef } from "preact";
 import { NumberInputLine } from "./components/NumberInputLine";
 import { Recipe } from "./types/Recipe";
-import { OutputBlock } from "./components/OutputBlock";
+import { OutputBlock, OutputBlockState } from "./components/OutputBlock";
 import { CommentBlock } from "./components/CommentBlock";
 import * as util from "./util";
 
 import isEqual = require("lodash.isequal");
 
 class Calculator extends Component {
+	private inputs = {
+		EUt: createRef<NumberInputLine>(),
+		Duration: createRef<NumberInputLine>(),
+		Chance: createRef<NumberInputLine>(),
+		RadioSeconds: createRef<HTMLInputElement>(),
+		RadioTicks: createRef<HTMLInputElement>(),
+		CheckboxMacerator: createRef<HTMLInputElement>(),
+	};
+
+	private outputBlock = createRef<OutputBlock>();
+	private commentBlock = createRef<CommentBlock>();
+	private darkModeButton = createRef<HTMLInputElement>();
+
+	private previousRecipe: Recipe;
+
+	private timerHandle: NodeJS.Timeout;
+
+	private darkModes = [
+		() => {
+			document.querySelector("body").className = "white";
+			this.darkModeButton.current.value = "Light Mode";
+		},
+		() => {
+			document.querySelector("body").className = "dark";
+			this.darkModeButton.current.value = "Semi-Dark Mode";
+		},
+		() => {
+			document.querySelector("body").className = "black";
+			this.darkModeButton.current.value = "Dark Mode";
+		},
+	];
+
+	private darkMode = Number(localStorage.getItem("darkMode")) || 0;
+	private darkModeClicks = 0;
+
 	constructor() {
 		super();
 
@@ -36,40 +71,16 @@ class Calculator extends Component {
 			this.inputs.RadioSeconds.current.checked = Boolean(params.get("seconds"));
 			this.inputs.RadioTicks.current.checked = !params.get("seconds");
 
-			this.changeCallback(true);
+			this.calculate(true);
 		};
 	}
 
-	componentDidMount() {
-		window.onhashchange(null);
-
-		this.darkModes[this.darkMode]();
-	}
-
-	private inputs = {
-		EUt: createRef<NumberInputLine>(),
-		Duration: createRef<NumberInputLine>(),
-		Chance: createRef<NumberInputLine>(),
-		RadioSeconds: createRef<HTMLInputElement>(),
-		RadioTicks: createRef<HTMLInputElement>(),
-		CheckboxMacerator: createRef<HTMLInputElement>(),
-	};
-
-	private outputBlock = createRef<OutputBlock>();
-	private commentBlock = createRef<CommentBlock>();
-	private darkModeButton = createRef<HTMLInputElement>();
-
-	private previousRecipe: Recipe;
-
-	private timerHandle: NodeJS.Timeout;
-	private destroyTimer() {
-		if (this.timerHandle) {
-			clearTimeout(this.timerHandle);
-			this.timerHandle = null;
-		}
-	}
-
-	private handleWindowHash(recipe: Recipe) {
+	/**
+	 * Update the location hash based on the given recipe.
+	 *
+	 * @param recipe Recipe
+	 */
+	private updateLocationHash(recipe: Recipe) {
 		let hash = "#";
 		if (recipe.EUt !== 0) {
 			hash += `eut=${recipe.EUt}`;
@@ -88,7 +99,7 @@ class Calculator extends Component {
 		}
 		if (window.location.hash !== hash) {
 			/*
-			 * what the fuck
+			 * what the fuck is this code man
 			 */
 			const callback = window.onhashchange;
 			window.onhashchange = null;
@@ -105,72 +116,74 @@ class Calculator extends Component {
 		}
 	}
 
-	private calculate(recipe: Recipe) {
-		this.destroyTimer();
-
-		if (isEqual(recipe, this.previousRecipe)) {
-			return;
-		}
-
-		this.previousRecipe = recipe;
-
-		if (recipe.chance === 0) {
-			recipe.chance = 0;
-		}
-
-		this.handleWindowHash(recipe);
-
-		const state = {
-			results: util.calculateOverclock(recipe),
-			chance: !!recipe.chance,
-			seconds: recipe.seconds,
-			bunned: false,
-		};
-
-		this.outputBlock.current.setState(state);
-		this.commentBlock.current.setState(state);
-	}
-
-	private changeCallback(instant = false) {
-		this.destroyTimer();
-
-		const recipe: Recipe = {
+	/**
+	 * Gathers recipe input values from all inputs on the page.
+	 */
+	private getRecipeInputValues(): Recipe {
+		return {
 			EUt: Number(this.inputs.EUt.current.input.current.value),
 			duration: Number(this.inputs.Duration.current.input.current.value),
 			chance: Number(this.inputs.Chance.current.input.current.value),
 			isMacerator: Boolean(this.inputs.CheckboxMacerator.current.checked),
 			seconds: Boolean(this.inputs.RadioSeconds.current.checked),
 		};
+	}
 
-		if (recipe.EUt === 0) {
-			return;
+	/**
+	 * Commences a calculation.
+	 *
+	 * @param instant Shall the calculation be instant?
+	 */
+	private calculate(instant = false) {
+		if (this.timerHandle) {
+			clearTimeout(this.timerHandle);
+			this.timerHandle = null;
 		}
 
-		if (isEqual(recipe, this.previousRecipe)) {
+		const recipe = this.getRecipeInputValues();
+
+		if (recipe.EUt === 0 || isEqual(recipe, this.previousRecipe)) {
 			return;
 		}
 
 		this.timerHandle = setTimeout(
 			() => {
-				this.calculate(recipe);
+				const state: OutputBlockState = {
+					results: util.calculateOverclock(recipe),
+					seconds: recipe.seconds,
+					chanced: !!recipe.chance,
+					bunned: false,
+				};
+
+				this.outputBlock.current.setState(state);
+				this.commentBlock.current.setState(state);
+
+				this.previousRecipe = recipe;
+				this.updateLocationHash(recipe);
 			},
 			instant ? 0 : 500,
 		);
 	}
 
+	/**
+	 * Renders the calculator.
+	 */
 	render() {
 		const callback = () => {
-			this.changeCallback();
+			this.calculate();
 		};
 		const callbackInstant = () => {
-			this.changeCallback(true);
+			this.calculate(true);
 		};
 
 		return (
 			<div class="calculator">
+				{/* Title Block */}
 				<div class="block title">
 					Omnifactory{"\u00A0"}v1.2.2 Overclocking{"\u00A0"}Calculator
 				</div>
+
+				{/* Input Block */}
 				<div class="input-container">
 					<div class="block input">
 						<div class="array">
@@ -231,8 +244,14 @@ class Calculator extends Component {
 						</div>
 					</div>
 				</div>
+
+				{/* Output Block */}
 				<OutputBlock ref={this.outputBlock} />
+
+				{/* Comment Block */}
 				<CommentBlock ref={this.commentBlock} />
+
+				{/* Attribution Block */}
 				<div class="block attribution">
 					<input
 						type="button"
@@ -242,7 +261,7 @@ class Calculator extends Component {
 							this.handleDarkMode();
 						}}
 					/>
-					<a href="https://github.com/NotMyWing/OverclockingCalculator">
+					<a href="https://github.com/NotMyWing/OverclockingCalculator" rel="noreferrer" target="_blank">
 						<span>OmnifactoryDevs </span>
 						<img src="https://github.com/OmnifactoryDevs.png?size=64" />
 					</a>
@@ -251,34 +270,34 @@ class Calculator extends Component {
 		);
 	}
 
-	private darkModes = [
-		() => {
-			document.querySelector("body").className = "white";
-			this.darkModeButton.current.value = "Light Mode";
-		},
-		() => {
-			document.querySelector("body").className = "dark";
-			this.darkModeButton.current.value = "Semi-Dark Mode";
-		},
-		() => {
-			document.querySelector("body").className = "black";
-			this.darkModeButton.current.value = "Dark Mode";
-		},
-	];
+	/**
+	 * Post-render hook. Enable animations and dark mode.
+	 */
+	componentDidMount() {
+		window.onhashchange(null);
 
-	private darkMode = Number(localStorage.getItem("darkMode")) || 0;
-	private darkModeClicks = 0;
+		this.darkModes[this.darkMode]();
 
-	handleDarkMode() {
+		setTimeout(() => {
+			document.querySelector(".calculator").classList.add("animated");
+		}, 250);
+	}
+
+	/**
+	 * Handle the darkmode button, alternating between three different modes.
+	 */
+	private handleDarkMode() {
 		this.darkMode = (this.darkMode + 1) % this.darkModes.length;
 		this.darkModes[this.darkMode]();
 
 		localStorage.setItem("darkMode", this.darkMode.toString());
 
+		/**
+		 * 🐰
+		 */
 		this.darkModeClicks++;
 		if (this.darkModeClicks > 10) {
 			const state = {
-				...this.outputBlock.current.state,
 				bunned: true,
 			};
 
