@@ -7,6 +7,7 @@ import { Recipe } from "./types/Recipe";
 import { OutputBlock, OutputBlockState } from "./components/OutputBlock";
 import { CommentBlock } from "./components/CommentBlock";
 import * as util from "./util";
+import projectPackage from "../package.json";
 
 import isEqual = require("lodash.isequal");
 
@@ -180,7 +181,7 @@ class Calculator extends Component {
 			<div class="calculator">
 				{/* Title Block */}
 				<div class="block title">
-					Omnifactory{"\u00A0"}v1.2.2 Overclocking{"\u00A0"}Calculator
+					Omnifactory{"\u00A0"}v1.2.2 Overclocking{"\u00A0"}Calculator <sup>{projectPackage.version}</sup>
 				</div>
 
 				{/* Input Block */}
@@ -261,7 +262,7 @@ class Calculator extends Component {
 							this.handleDarkMode();
 						}}
 					/>
-					<a href="https://github.com/NotMyWing/OverclockingCalculator" rel="noreferrer" target="_blank">
+					<a href="https://github.com/OmnifactoryDevs/OverclockingCalculator" rel="noreferrer" target="_blank">
 						<span>OmnifactoryDevs </span>
 						<img src="https://github.com/OmnifactoryDevs.png?size=64" />
 					</a>
