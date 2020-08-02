@@ -226,8 +226,8 @@ class Calculator extends Component {
 			<div class="block attribution">
 				<input type="button" value="Dark Mode" ref={this.darkModeButton} onClick={() => { this.handleDarkMode() }}/>
 				<a href="https://github.com/NotMyWing/OverclockingCalculator">
-					<span>NMW </span>
-					<img src="https://github.com/NotMyWing.png?size=64"></img>
+					<span>OmnifactoryDevs </span>
+					<img src="https://github.com/OmnifactoryDevs.png?size=64"></img>
 				</a>
 			</div>
 		</div>
