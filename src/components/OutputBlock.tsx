@@ -28,6 +28,7 @@ export class OutputBlock extends Component<unknown, OutputBlockState> {
 							<td>Duration</td>
 							{this.state.chanced && <td>Chance</td>}
 							<td>EU/t</td>
+							<td>Total EU</td>
 						</tr>
 						{this.state.results.map((recipeResult) => {
 							return (
@@ -36,6 +37,7 @@ export class OutputBlock extends Component<unknown, OutputBlockState> {
 									<td>{this.state.seconds ? `${recipeResult.duration / 20} s.` : `${recipeResult.duration} t.`}</td>
 									{this.state.chanced && <td>{recipeResult.chance || 0}%</td>}
 									<td>{recipeResult.EUt.toLocaleString("en-US")}</td>
+									<td>{recipeResult.duration * recipeResult.EUt} EU</td>
 								</tr>
 							);
 						})}
