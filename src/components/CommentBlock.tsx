@@ -58,11 +58,11 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						Since the recipe has the base EU/t of <b>16</b> or less, the duration is divided by <b>2</b> per overclock.
+						Since the recipe's base EU/t is <b>16</b> or less, the duration is divided by <b>2</b> per overclock.
 						{maxSpeed !== last && (
 							<ul>
 								<li>
-									Because GTCE has a flaw in the logic, the recipe starts wasting power after{" "}
+									Because GTCE has a flaw in its logic, the recipe starts wasting power after{" "}
 									<b>{VNames[(continuousCap || cap).tier]}</b>.
 								</li>
 							</ul>
@@ -75,7 +75,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						Since the recipe has the base EU/t higher than <b>16</b>, the duration is divided by <b>2.8</b> per
+						Since the recipe's base EU/t is higher than <b>16</b>, the duration is divided by <b>2.8</b> per
 						overclock.
 					</li>,
 				);
@@ -91,7 +91,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				comments.push(
 					<li>
 						While the recipe technically caps out at <b>{VNames[cap.tier]}</b>, the recipe will be processed at the same
-						speed in <b>{VNames[continuousCap.tier]} machine</b> for less power when running continuously.
+						speed in a <b>{VNames[continuousCap.tier]} machine</b> for less power when running continuously.
 					</li>,
 				);
 			} else {
@@ -100,7 +100,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						The recipe reaches the maximum speed at <b>{VNames[maxSpeed.tier]}</b>.
+						The recipe reaches maximum speed at <b>{VNames[maxSpeed.tier]}</b>.
 						{maxSpeed == continuousCap && (
 							<ul>
 								<li>
@@ -125,7 +125,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				if (this.state.results[0].isMacerator) {
 					comments.push(
 						<li>
-							Because the machine is macerator, the product chance starts scaling after <b>MV</b>.
+							Because the machine is a macerator, the product chance starts scaling after <b>MV</b>.
 						</li>,
 					);
 				}
