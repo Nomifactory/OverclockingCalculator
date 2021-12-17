@@ -13,27 +13,27 @@ export class OutputBlock extends Component<unknown, OutputBlockState> {
 	render(): h.JSX.Element {
 		if (this.state.bunned) {
 			return (
-				<div class="block output">
-					<div class="bunbun" />
+				<div className="block output">
+					<div className="bunbun" />
 				</div>
 			);
 		}
 
 		return (
-			<div class="block output">
+			<div className="block output">
 				{this.state.results && (
 					<table>
 						<tr>
-							<td class="tier">Tier</td>
+							<td className="tier">Tier</td>
 							<td>Duration</td>
 							{this.state.chanced && <td>Chance</td>}
 							<td>EU/t</td>
 							<td>Total EU</td>
 						</tr>
-						{this.state.results.map((recipeResult) => {
+						{this.state.results.map((recipeResult, idx) => {
 							return (
-								<tr>
-									<td class="tier">{VNames[recipeResult.tier]}</td>
+								<tr key={idx}>
+									<td className="tier">{VNames[recipeResult.tier]}</td>
 									<td>{this.state.seconds ? `${recipeResult.duration / 20} s.` : `${recipeResult.duration} t.`}</td>
 									{this.state.chanced && <td>{recipeResult.chance || 0}%</td>}
 									<td>{recipeResult.EUt.toLocaleString("en-US")}</td>

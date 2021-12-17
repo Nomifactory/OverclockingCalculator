@@ -8,7 +8,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 	render(): h.JSX.Element {
 		const comments: preact.JSX.Element[] = [];
 		if (this.state.bunned) {
-			comments.push(...facts.map((fact) => <li>{fact}</li>));
+			comments.push(...facts.map((fact, idx) => <li key={idx}>{fact}</li>));
 			comments.push(
 				<li>
 					Source:{" "}
@@ -17,7 +17,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 						rel="noreferrer"
 						href="https://www.natgeokids.com/au/discover/animals/general-animals/10-hopping-fun-rabbit-facts/"
 					>
-						"10 HOPPING FUN RABBIT FACTS!"
+						&quot;10 HOPPING FUN RABBIT FACTS!&quot;
 					</a>
 				</li>,
 			);
@@ -32,21 +32,13 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 			let maxSpeed: RecipeResult;
 
 			this.state.results.forEach((recipe) => {
-				if (!continuousCap && recipe.duration === 2) {
-					continuousCap = recipe;
-				}
+				if (!continuousCap && recipe.duration === 2) continuousCap = recipe;
 
-				if (this.state.chanced && (!maxChance || maxChance.chance < recipe.chance)) {
-					maxChance = recipe;
-				}
+				if (this.state.chanced && (!maxChance || maxChance.chance < recipe.chance)) maxChance = recipe;
 
-				if (!cap && recipe.duration === 1) {
-					cap = recipe;
-				}
+				if (!cap && recipe.duration === 1) cap = recipe;
 
-				if (!maxSpeed || maxSpeed.duration > recipe.duration) {
-					maxSpeed = recipe;
-				}
+				if (!maxSpeed || maxSpeed.duration > recipe.duration) maxSpeed = recipe;
 			});
 
 			/**
@@ -58,7 +50,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						Since the recipe's base EU/t is <b>16</b> or less, the duration is divided by <b>2</b> per overclock.
+						Since the recipe&apos;s base EU/t is <b>16</b> or less, the duration is divided by <b>2</b> per overclock.
 						{maxSpeed !== last && (
 							<ul>
 								<li>
@@ -75,7 +67,8 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						Since the recipe's base EU/t is higher than <b>16</b>, the duration is divided by <b>2.8</b> per overclock.
+						Since the recipe&apos;s base EU/t is higher than <b>16</b>, the duration is divided by <b>2.8</b> per
+						overclock.
 					</li>,
 				);
 			}
@@ -92,6 +85,10 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 						While the recipe technically caps out at <b>{VNames[cap.tier]}</b>, the recipe will be processed at the same
 						speed in a <b>{VNames[continuousCap.tier]} machine</b> for less power when running continuously.
 					</li>,
+					<li>
+						Note that the above is <b>no longer true</b> in the <b>development version of the pack</b> where this is
+						fixed.
+					</li>,
 				);
 			} else {
 				/**
@@ -100,11 +97,15 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				comments.push(
 					<li>
 						The recipe reaches maximum speed at <b>{VNames[maxSpeed.tier]}</b>.
-						{maxSpeed == continuousCap && (
+						{maxSpeed === continuousCap && (
 							<ul>
 								<li>
 									While the recipe caps out at 2 ticks, it will actually be processed faster (at 1 tick) when running
 									continuously.
+								</li>
+								<li>
+									Note that the above is <b>no longer true</b> in the <b>development version of the pack</b> where this
+									is fixed.
 								</li>
 							</ul>
 						)}
@@ -135,11 +136,11 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 		 * Render comments.
 		 */
 		return (
-			<div class="block comment">
+			<div className="block comment">
 				{comments.length > 0 && (
 					<ul>
-						{comments.map((c) => (
-							<li>{c}</li>
+						{comments.map((c, idx) => (
+							<li key={idx}>{c}</li>
 						))}
 					</ul>
 				)}

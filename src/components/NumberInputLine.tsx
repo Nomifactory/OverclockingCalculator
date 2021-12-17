@@ -10,13 +10,9 @@ export class NumberInputLine extends Component<NumberInputLineProps, NumberInput
 	label: string;
 
 	private onChange(e: Event) {
-		if (this.state.changeCallback) {
-			return this.props.changeCallback(e);
-		}
+		if (this.state.changeCallback) return this.props.changeCallback(e);
 
-		if (this.props.changeCallback) {
-			return this.props.changeCallback(e);
-		}
+		if (this.props.changeCallback) return this.props.changeCallback(e);
 	}
 
 	constructor(props: NumberInputLineProps) {
@@ -30,7 +26,7 @@ export class NumberInputLine extends Component<NumberInputLineProps, NumberInput
 		};
 
 		return (
-			<div class="input-line">
+			<div className="input-line">
 				<span>{this.state.label || this.props.label}</span>
 				<input type="number" placeholder="0" ref={this.input} onChange={callback} onInput={callback} step="any" />
 			</div>

@@ -1,7 +1,7 @@
 import "normalize.css";
 import "./style.scss";
 
-import { h, render, Component, createRef } from "preact";
+import { render, Component, createRef, h } from "preact";
 import { NumberInputLine } from "./components/NumberInputLine";
 import { Recipe } from "./types/Recipe";
 import { OutputBlock, OutputBlockState } from "./components/OutputBlock";
@@ -54,19 +54,13 @@ class Calculator extends Component {
 			const params = new URLSearchParams(location.hash.replace(/^#/, ""));
 
 			const eut = Number(params.get("eut"));
-			if (eut !== 0) {
-				this.inputs.EUt.current.input.current.value = eut.toString();
-			}
+			if (eut !== 0) this.inputs.EUt.current.input.current.value = eut.toString();
 
 			const duration = Number(params.get("duration"));
-			if (duration !== 0) {
-				this.inputs.Duration.current.input.current.value = duration.toString();
-			}
+			if (duration !== 0) this.inputs.Duration.current.input.current.value = duration.toString();
 
 			const chance = Number(params.get("chance"));
-			if (chance) {
-				this.inputs.Chance.current.input.current.value = chance.toString();
-			}
+			if (chance) this.inputs.Chance.current.input.current.value = chance.toString();
 
 			this.inputs.CheckboxMacerator.current.checked = Boolean(params.get("mace"));
 			this.inputs.RadioSeconds.current.checked = Boolean(params.get("seconds"));
@@ -83,20 +77,15 @@ class Calculator extends Component {
 	 */
 	private updateLocationHash(recipe: Recipe) {
 		let hash = "#";
-		if (recipe.EUt !== 0) {
-			hash += `eut=${recipe.EUt}`;
-		}
-		if (recipe.duration !== 0) {
-			hash += `&duration=${recipe.duration}`;
-		}
-		if (recipe.seconds) {
-			hash += `&seconds=${recipe.seconds}`;
-		}
+		if (recipe.EUt !== 0) hash += `eut=${recipe.EUt}`;
+
+		if (recipe.duration !== 0) hash += `&duration=${recipe.duration}`;
+
+		if (recipe.seconds) hash += `&seconds=${recipe.seconds}`;
+
 		if (recipe.chance) {
 			hash += `&chance=${recipe.chance}`;
-			if (recipe.isMacerator) {
-				hash += `&mace=${recipe.isMacerator}`;
-			}
+			if (recipe.isMacerator) hash += `&mace=${recipe.isMacerator}`;
 		}
 		if (window.location.hash !== hash) {
 			/*
@@ -105,11 +94,8 @@ class Calculator extends Component {
 			const callback = window.onhashchange;
 			window.onhashchange = null;
 
-			if (hash === "#") {
-				history.pushState(null, null, " ");
-			} else {
-				window.location.hash = hash;
-			}
+			if (hash === "#") history.pushState(null, null, " ");
+			else window.location.hash = hash;
 
 			setTimeout(() => {
 				window.onhashchange = callback;
@@ -143,9 +129,7 @@ class Calculator extends Component {
 
 		const recipe = this.getRecipeInputValues();
 
-		if (recipe.EUt === 0 || isEqual(recipe, this.previousRecipe)) {
-			return;
-		}
+		if (recipe.EUt === 0 || isEqual(recipe, this.previousRecipe)) return;
 
 		this.timerHandle = setTimeout(
 			() => {
@@ -178,21 +162,21 @@ class Calculator extends Component {
 		};
 
 		return (
-			<div class="calculator">
+			<div className="calculator">
 				{/* Title Block */}
-				<div class="block title">
-					Omnifactory{"\u00A0"}v1.2.2 Overclocking{"\u00A0"}Calculator <sup>{projectPackage.version}</sup>
+				<div className="block title">
+					Omnifactory v1.2.2 Overclocking Calculator <sup>{projectPackage.version}</sup>
 				</div>
 
 				{/* Input Block */}
-				<div class="input-container">
-					<div class="block input">
-						<div class="array">
+				<div className="input-container">
+					<div className="block input">
+						<div className="array">
 							<NumberInputLine label="EU/t:" ref={this.inputs.EUt} changeCallback={callback} />
 							<div>
 								<NumberInputLine label="Duration:" ref={this.inputs.Duration} changeCallback={callback} />
-								<div class="radio-group">
-									<div class="input-box">
+								<div className="radio-group">
+									<div className="input-box">
 										<input
 											type="radio"
 											name="tors"
@@ -202,10 +186,10 @@ class Calculator extends Component {
 											onChange={callbackInstant}
 											onInput={callbackInstant}
 										/>
-										<label for="ticks">Ticks</label>
+										<label htmlFor="ticks">Ticks</label>
 									</div>
 
-									<div class="input-box">
+									<div className="input-box">
 										<input
 											type="radio"
 											name="tors"
@@ -215,21 +199,21 @@ class Calculator extends Component {
 											onChange={callbackInstant}
 											onInput={callbackInstant}
 										/>
-										<label for="seconds">Seconds</label>
+										<label htmlFor="seconds">Seconds</label>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="block chance">
+					<div className="block chance">
 						<div>
 							<NumberInputLine
 								label="Base Product Chance (optional):"
 								ref={this.inputs.Chance}
 								changeCallback={callback}
 							/>
-							<div class="radio-group">
-								<div class="input-box">
+							<div className="radio-group">
+								<div className="input-box">
 									<input
 										type="checkbox"
 										name="macerator"
@@ -238,10 +222,12 @@ class Calculator extends Component {
 										onChange={callbackInstant}
 										id="macerator"
 									/>
-									<label for="macerator">Machine is Macerator</label>
+									<label htmlFor="macerator">Machine is Macerator</label>
 								</div>
 							</div>
-							<div class="hint">Hover over a product in JEI. If it has a chance associated with it, type it here.</div>
+							<div className="hint">
+								Hover over a product in JEI. If it has a chance associated with it, type it here.
+							</div>
 						</div>
 					</div>
 				</div>
@@ -253,7 +239,7 @@ class Calculator extends Component {
 				<CommentBlock ref={this.commentBlock} />
 
 				{/* Attribution Block */}
-				<div class="block attribution">
+				<div className="block attribution">
 					<input
 						type="button"
 						value="Dark Mode"
@@ -298,9 +284,8 @@ class Calculator extends Component {
 		 */
 		this.darkModeClicks++;
 
-		if (this.darkModeClicks > 10 || this.outputBlock.current.state.bunned) {
+		if (this.darkModeClicks > 10 || this.outputBlock.current.state.bunned)
 			this.darkModeButton.current.value = "Rabbit Mode";
-		}
 
 		if (this.darkModeClicks > 10) {
 			const state = {

@@ -21,11 +21,8 @@ export enum GTTiers {
 export const getTierByVoltage = (voltage: number): number => {
 	let tier = 0;
 	while (++tier < V.length) {
-		if (voltage == V[tier]) {
-			return tier;
-		} else if (voltage < V[tier]) {
-			return Math.max(0, tier - 1);
-		}
+		if (voltage === V[tier]) return tier;
+		else if (voltage < V[tier]) return Math.max(0, tier - 1);
 	}
 	return Math.min(V.length - 1, tier);
 };
@@ -33,14 +30,11 @@ export const getTierByVoltage = (voltage: number): number => {
 const getByproductChanceMultiplier = (tier: number, recipe: Recipe) => {
 	const recipeTier = getTierByVoltage(recipe.EUt);
 	if (recipe.isMacerator) {
-		if (tier >= GTTiers.MV) {
-			return 1 << (tier - GTTiers.MV);
-		}
+		if (tier >= GTTiers.MV) return 1 << (tier - GTTiers.MV);
 
 		return 1;
-	} else if (!recipe.isMacerator && tier > GTTiers.LV && tier > recipeTier) {
-		return 1 << (tier - recipeTier);
-	}
+	} else if (!recipe.isMacerator && tier > GTTiers.LV && tier > recipeTier) return 1 << (tier - recipeTier);
+
 	return 1;
 };
 
@@ -50,7 +44,7 @@ https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/ca
 const calculateOverclockInternal = (EUt: number, voltage: number, duration: number) => {
 	const negativeEU = EUt < 0;
 	const tier = getTierByVoltage(voltage);
-	if (V[tier] <= EUt || tier == 0) return [EUt, duration];
+	if (V[tier] <= EUt || tier === 0) return [EUt, duration];
 	if (negativeEU) EUt = -EUt;
 	if (EUt <= 16) {
 		const multiplier = EUt <= 8 ? tier : tier - 1;
@@ -79,19 +73,15 @@ export const calculateOverclock = (recipe: Recipe): RecipeResult[] => {
 	const output: RecipeResult[] = [];
 	while (voltage < V[V.length - 1]) {
 		voltage += V[tier];
-		if (voltage == V[tier + 1]) {
-			tier++;
-		}
+
+		if (voltage > V[GTTiers.UV]) voltage = V[GTTiers.MAX];
+		if (voltage === V[tier + 1]) tier++;
 
 		const result = calculateOverclockInternal(recipe.EUt, voltage, duration);
-		if (voltage / V[tier] == 1 && voltage >= recipe.EUt) {
-			if (result[1] < 1) {
-				result[1] = 1; // ¯\_(ツ)_/¯
-			}
+		if (voltage / V[tier] === 1 && voltage >= recipe.EUt) {
+			if (result[1] < 1) result[1] = 1; // ¯\_(ツ)_/¯
 
-			if (recipe.EUt <= 16 && result[1] <= 2) {
-				waste = true;
-			}
+			if (recipe.EUt <= 16 && result[1] <= 2) waste = true;
 
 			output.push({
 				EUt: result[0],
