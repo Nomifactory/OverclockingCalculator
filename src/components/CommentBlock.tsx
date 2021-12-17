@@ -75,8 +75,7 @@ export class CommentBlock extends Component<unknown, OutputBlockState> {
 				 */
 				comments.push(
 					<li>
-						Since the recipe's base EU/t is higher than <b>16</b>, the duration is divided by <b>2.8</b> per
-						overclock.
+						Since the recipe's base EU/t is higher than <b>16</b>, the duration is divided by <b>2.8</b> per overclock.
 					</li>,
 				);
 			}
