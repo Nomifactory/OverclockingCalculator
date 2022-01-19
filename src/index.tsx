@@ -165,7 +165,7 @@ class Calculator extends Component {
 			<div className="calculator">
 				{/* Title Block */}
 				<div className="block title">
-					Omnifactory v1.2.2 Overclocking Calculator <sup>{projectPackage.version}</sup>
+					Nomifactory v1.2.2 Overclocking Calculator <sup>{projectPackage.version}</sup>
 				</div>
 
 				{/* Input Block */}
@@ -248,9 +248,9 @@ class Calculator extends Component {
 							this.handleDarkMode();
 						}}
 					/>
-					<a href="https://github.com/OmnifactoryDevs/OverclockingCalculator" rel="noreferrer" target="_blank">
-						<span>OmnifactoryDevs </span>
-						<img src="https://github.com/OmnifactoryDevs.png?size=64" />
+					<a href="https://github.com/Nomifactory/OverclockingCalculator" rel="noreferrer" target="_blank">
+						<span>Nomifactory </span>
+						<img src="https://github.com/Nomifactory.png?size=64" />
 					</a>
 				</div>
 			</div>

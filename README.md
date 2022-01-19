@@ -1,13 +1,13 @@
-# Omnifactory Overclocking Calculator ![language](https://img.shields.io/badge/language-typescript-blue.svg) [![Build Status](https://travis-ci.com/OmnifactoryDevs/OverclockingCalculator.svg?branch=master)](https://travis-ci.com/OmnifactoryDevs/OverclockingCalculator)
+# Nomifactory Overclocking Calculator ![language](https://img.shields.io/badge/language-typescript-blue.svg) [![Build Status](https://travis-ci.com/Nomifactory/OverclockingCalculator.svg?branch=master)](https://travis-ci.com/Nomifactory/OverclockingCalculator)
 
-A calculator for GregTechCE machines with the Omnifactory version of the mod in mind. [See it live!](https://omnifactorydevs.github.io/OverclockingCalculator)
+A calculator for GregTechCE machines with the Nomifactory version of the mod in mind. [See it live!](https://nomifactory.github.io/OverclockingCalculator)
 
 ## Installation
 
 Ensure that you have Git and Node >=13 installed.
 
 ```sh
-git clone https://github.com/OmnifactoryDevs/OverclockingCalculator.git
+git clone https://github.com/Nomifactory/OverclockingCalculator.git
 cd OverclockingCalculator
 npm install
 ```
@@ -22,12 +22,12 @@ npm run watch # Watch files and recompile as you develop, http://localhost:8080 
 
 ## Support
 
-Please [open an issue](https://github.com/OmnifactoryDevs/OverclockingCalculator/issues/new) for support.
+Please [open an issue](https://github.com/Nomifactory/OverclockingCalculator/issues/new) for support.
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/OmnifactoryDevs/OverclockingCalculator/compare/).
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/Nomifactory/OverclockingCalculator/compare/).
 
 ## License
 
-[GNU GPLv3](LICENSE) © [OmnifactoryDevs](https://github.com/OmnifactoryDevs)
+[GNU GPLv3](LICENSE) © [Nomifactory](https://github.com/Nomifactory)

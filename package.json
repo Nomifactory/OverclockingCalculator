@@ -4,7 +4,7 @@
   "description": "Calculates stuff",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OmnifactoryDevs/OverclockingCalculator.git"
+    "url": "https://github.com/Nomifactory/OverclockingCalculator.git"
   },
   "main": "index.js",
   "eslintConfig": {
@@ -55,6 +55,6 @@
     "watch-listen": "npx webpack-dev-server --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "OmnifactoryDevs",
+  "author": "Nomifactory",
   "license": "GNU GPLv3"
 }
